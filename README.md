@@ -1,5 +1,7 @@
 # Jekyll in a Docker Container
 
+Node.js on top of [BretFisher/jekyll-serve](https://github.com/BretFisher/jekyll-serve) for [ExecJS support](https://github.com/jekyll/jekyll/issues/2327).
+
 > But this has been done. Why not `docker pull jekyll/jekyll`?
 
 - I wanted defaults to be `jekyll serve` when container is run, which I use 90% of time
@@ -15,14 +17,14 @@ Assuming Docker and Docker Compose are installed:
 
 ```shell
 cd dir/of/your/jekyll/site
-docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve
+docker run -p 80:4000 -v $(pwd):/site neverendingqs/jekyll-serve-nodejs
 ```
 
 That's it! 
 
 Details: it will mount your current path into the containers `/site`, `bundle install` before running `jekyll serve` to , serve it at `http://localhost`.
 
-To make this even easier, copy `docker-compose.yml` [from this repo](https://github.com/BretFisher/jekyll-serve/blob/master/docker-compose.yml) to your jekyll site root. Then you'll only need to:
+To make this even easier, copy `docker-compose.yml` [from this repo](https://github.com/neverendingqs/jekyll-serve-nodejs/blob/master/docker-compose.yml) to your jekyll site root. Then you'll only need to:
 
 ```shell
 cd dir/of/your/jekyll/site
@@ -36,7 +38,7 @@ docker-compose up
 just add a environment variable to the `run` command to tell the container to make one:
 
 ```shell
-docker run -p 80:4000 -v $(pwd):/site -e JEKYLL_NEW=true bretfisher/jekyll-serve
+docker run -p 80:4000 -v $(pwd):/site -e JEKYLL_NEW=true neverendingqs/jekyll-serve-nodejs
 ```
 
 **Q. What if I want to run other jekyll commands?**
@@ -44,7 +46,7 @@ docker run -p 80:4000 -v $(pwd):/site -e JEKYLL_NEW=true bretfisher/jekyll-serve
 just add the command to the end (with your -v included) to override the `jekyll serve`:
 
 ```shell
-docker run -v $(pwd):/site bretfisher/jekyll-serve jekyll doctor
+docker run -v $(pwd):/site neverendingqs/jekyll-serve-nodejs jekyll doctor
 ```
 
 ## License
